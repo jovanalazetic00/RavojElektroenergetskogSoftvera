@@ -1,0 +1,46 @@
+CREATE DATABASE RES_PROJEKAT;
+
+CREATE TABLE RES_PROJEKAT.brojilo(
+	IdBrojila INTEGER NOT NULL,
+    Ime VARCHAR(35) NOT NULL,
+    Prezime VARCHAR(35) NOT NULL,
+    Ulica VARCHAR(35) NOT NULL,
+    Broj INTEGER NOT NULL,
+    PostanskiBroj CHAR(5) NOT NULL,
+    Grad VARCHAR(30) NOT NULL,
+    CONSTRAINT brojilo_PK PRIMARY KEY (IdBrojila),
+    CONSTRAINT brojilo_CK CHECK (REGEXP_LIKE(PostanskiBroj, '[0-9]{5}'))
+);
+
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (1,"Janko","Jankovic","Vuka Karadzica",50,"21101","Novi Sad");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (2,"Pera","Peric","Jovana Jovanovica Zmaja",13,"21101","Novi Sad");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (3,"Marko","Markovic","Pap Pavla",100,"11000","Beograd");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (4,"Jovan","Jovanovic","Karadjordjeva",34,"21480","Srbobran");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (5,"Ana","Ivanovic","Srbijanska",98,"21101","Novi Sad");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (6,"Sara","Saric","Narodnog fronta",21,"11000","Beograd");
+INSERT INTO RES_PROJEKAT.brojilo (IdBrojila,Ime,Prezime,Ulica,Broj,PostanskiBroj,Grad)
+	VALUES (7,"Nikola","Ninkovic","Suboticka",220,"24000","Subotica");
+
+CREATE TABLE RES_PROJEKAT.potrosnjaBrojila(
+  IdBrojila INTEGER NOT NULL,
+  Potrosnja DOUBLE NOT NULL,
+  Mesec INTEGER NOT NULL,
+  CONSTRAINT potrosnjaBrojila_PK PRIMARY KEY (IdBrojila, Mesec),
+  CONSTRAINT potrosnjaBrojila_FK FOREIGN KEY (IdBrojila) REFERENCES RES_PROJEKAT.brojilo(IdBrojila),
+  CONSTRAINT potrosnjaBrojila_CK1 CHECK (Mesec > 0 and Mesec <= 12),
+  CONSTRAINT potrosnjaBrojila_CK2 CHECK (potrosnja >= 0)
+);
+
+INSERT INTO RES_PROJEKAT.potrosnjaBrojila (IdBrojila,Potrosnja,Mesec) Values (1,542.12,1);
+INSERT INTO RES_PROJEKAT.potrosnjaBrojila (IdBrojila,Potrosnja,Mesec) Values (5,666.09,2);
+INSERT INTO RES_PROJEKAT.potrosnjaBrojila (IdBrojila,Potrosnja,Mesec) Values (5,700.76,1);
+INSERT INTO RES_PROJEKAT.potrosnjaBrojila (IdBrojila,Potrosnja,Mesec) Values (2,230.1,5);
+INSERT INTO RES_PROJEKAT.potrosnjaBrojila (IdBrojila,Potrosnja,Mesec) Values (6,888,12);
+
+COMMIT;
